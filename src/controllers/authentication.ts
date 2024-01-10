@@ -1,17 +1,21 @@
-import { createUser, getUserByEmail } from 'db/users';
+import { createUser, getUserByEmail } from '../db/users';
 import express from 'express';
-import { authentication, random } from 'helpers';
+import { authentication, random } from '../helpers';
 
 export const register = async (req: express.Request, res: express.Response) => {
     try {
         const { email, password, username } = req.body;
 
         if (!email || !username || !password) {
+            console.log("Running");
+            
             return res.sendStatus(400);
         }
 
         const existingUser = await getUserByEmail(email);
         if (existingUser) {
+            console.log("existing user");
+            
             return res.sendStatus(400);
         }
 
